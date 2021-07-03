@@ -1,0 +1,31 @@
+# spring-boot-docker-debug
+
+```
+./mvnw package
+docker build -t ckina/spring-boot-docker-debug .
+docker run -e "JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" -p 8080:8080 -p 5005:5005 ckina/spring-boot-docker-debug
+```
+
+## docker-compose
+
+Create docker-compose.yml file:
+
+```
+version: '3.3'
+
+services:
+  spring-boot:
+    container_name: dc-spring-boot-docker-debug
+    build: .
+    ports:
+      - '8080:8080'
+      - '5005:5005'
+    environment:
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+```
+
+Then, run it
+
+```
+docker-compose up
+```

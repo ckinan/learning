@@ -1,0 +1,11 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html>
+<head>
+    <title>Login Error Page</title>
+</head>
+<body>
+<h1>Login Error Page</h1>
+<p>Reason: <span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></span></p>
+<p>Go to <a href="/custom-login">Login Page</a></p>
+</body>
+</html>

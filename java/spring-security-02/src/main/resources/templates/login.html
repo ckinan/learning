@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Login Page</title>
+</head>
+<body>
+<h1>Login Page</h1>
+<form th:action="@{/custom-login}" method="post">
+    <div>
+        Username: <input type="text" name="myUser"/>
+    </div>
+    <div>
+        Password: <input type="password" name="myPass"/>
+    </div>
+    <div>
+        <input type="submit" value="Log in" />
+    </div>
+</form>
+</body>
+</html>
