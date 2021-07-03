@@ -20,6 +20,14 @@ go run .
 
 - https://golang.org/doc/tutorial/handle-errors
 
+## 04-maps-slides
+
+- https://golang.org/doc/tutorial/greetings-multiple-people
+
+## 05-testing
+
+- https://golang.org/doc/tutorial/add-a-test
+
 ## Refs
 
 ### Quotes
