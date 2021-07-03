@@ -9,4 +9,4 @@ go run .
 
 ### Links
 
-- https://golang.org/doc/
+- https://golang.org/doc/tutorial/getting-started
