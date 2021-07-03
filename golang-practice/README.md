@@ -30,3 +30,4 @@ go run .
 
 - Visual Studio Code Plugin: https://marketplace.visualstudio.com/items?itemName=golang.Go
 - For error message in Visual Studio Code saying: `Error loading workspace: You are outside of a module and outside of $GOPATH/src. If you are using modules, please open your editor to a directory in your module`: https://github.com/microsoft/vscode-go/issues/3086#issuecomment-597423488
+- How to debug Go code in Visual Studio Code: https://www.digitalocean.com/community/tutorials/debugging-go-code-with-visual-studio-code
