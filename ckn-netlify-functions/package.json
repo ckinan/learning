@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "dotenv-webpack": "^1.7.0",
+    "encoding": "^0.1.12",
+    "netlify-lambda": "^1.6.3",
+    "node-fetch": "^2.6.0"
+  },
+  "scripts": {
+    "build": "netlify-lambda build src",
+    "install": "netlify-lambda install src",
+    "serve": "netlify-lambda serve src --config ./webpack.functions.js"
+  },
+  "name": "ckn-netlify-functions",
+  "description": "Ref: https://github.com/netlify/netlify-lambda",
+  "version": "1.0.0"
+}
