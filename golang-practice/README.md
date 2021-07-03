@@ -1,12 +1,12 @@
 # golang-practice
 
-## Commands
+## 01-getting-started
 
 ```go
 go mod init example.com/hello
 go run .
 ```
 
-## Links
+### Links
 
 - https://golang.org/doc/
