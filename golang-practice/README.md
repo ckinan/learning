@@ -21,3 +21,12 @@ go run .
 
 - https://golang.org/doc/tutorial/create-module
 - https://golang.org/doc/tutorial/call-module-code
+
+## 03-error-handling
+
+- https://golang.org/doc/tutorial/handle-errors
+
+## Refs
+
+- Visual Studio Code Plugin: https://marketplace.visualstudio.com/items?itemName=golang.Go
+- For error message in Visual Studio Code saying: `Error loading workspace: You are outside of a module and outside of $GOPATH/src. If you are using modules, please open your editor to a directory in your module`: https://github.com/microsoft/vscode-go/issues/3086#issuecomment-597423488
