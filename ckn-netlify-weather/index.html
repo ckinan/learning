@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1>Weather</h1>
+    <div><strong>Location: </strong><span id="location"></span></div>
+    <div><strong>Temperature: </strong><span id="temperature"></span></div>
+  </body>
+
+  <script>
+    window.onload = async (event) => {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        const weatherResp = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
+        const weather = await weatherResp.json();
+
+        var location = document.querySelector("#location");
+        location.textContent = `${weather.location.region} - ${weather.location.country}`;
+
+        var temperature = document.querySelector("#temperature");
+        temperature.textContent = `${weather.current.temperature} C`;
+
+        console.log(weather);
+      });
+    };
+  </script>
+</html>

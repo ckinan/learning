@@ -1,0 +1,12 @@
+[build]
+    command = "npm install"
+    functions = "src/"
+    publish = "."
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[template.environment]
+  API_KEY = "API Key from https://weatherstack.com/"
