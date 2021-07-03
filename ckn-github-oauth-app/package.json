@@ -1,0 +1,11 @@
+{
+  "name": "ckn-github-oauth-app",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "echo \"building...\""
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
