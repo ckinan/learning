@@ -14,6 +14,7 @@ go run .
 ## 02-create-module
 
 > Go code is grouped into packages, and packages are grouped into modules.
+>
 > In Go, a function whose name starts with a capital letter can be called by a function not in the same package. This is known in Go as an exported name.
 
 ### Links
