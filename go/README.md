@@ -66,3 +66,5 @@ go install
 - How to debug Go code in Visual Studio Code: https://www.digitalocean.com/community/tutorials/debugging-go-code-with-visual-studio-code
 - CLI: https://github.com/spf13/cobra
 - TUI: https://github.com/rivo/tview
+- https://github.com/urfave/cli
+- https://github.com/spf13/cobra
