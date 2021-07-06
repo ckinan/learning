@@ -33,12 +33,18 @@ go run .
 
 Playing with [tview](https://github.com/rivo/tview)
 
+## 07-termui
+
+Playing with [termui](https://github.com/gizak/termui)
+
 ## no-folder: compile and install
 
 Compile and install (can use `05-testing` folder to follow the tutorial): https://golang.org/doc/tutorial/compile-install
 
 ```bash
 export PATH=$PATH:$HOME/go/bin
+go mod init github.com/ckinan.com/learning
+go mod tidy
 go build
 go install
 ```
