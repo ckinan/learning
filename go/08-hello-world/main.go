@@ -8,7 +8,7 @@ import (
 
 func main() {
 	rootCmd := &cobra.Command{
-		Use:   "hello2",
+		Use:   "hello3",
 		Short: "A simple CLI that greets the user",
 	}
 
