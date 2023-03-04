@@ -6,6 +6,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const version = "0.1.0"
+
 func main() {
 	rootCmd := &cobra.Command{
 		Use:   "hello3",
