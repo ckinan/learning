@@ -25,7 +25,7 @@ func monitor(total int, count chan int, done chan bool) {
 
 func main() {
 	worker := make(chan struct{}, 10)
-	total := 1000
+	total := 100
 	count := make(chan int)
 	done := make(chan bool)
 	var wg sync.WaitGroup
