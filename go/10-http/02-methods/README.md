@@ -48,14 +48,12 @@ mux.HandleFunc("POST /tasks", createTask)
 
 This pattern makes it clear which methods and paths are supported, and the `ServeMux` handles the routing for you.
 
-Source: https://go.dev/blog/routing-enhancements
-
 ## Endpoints
 
 - `GET /tasks`: Lists all tasks.
-- `POST /tasks/create`: Creates a new task. Requires a JSON body with a `name` field.
-- `PUT /tasks/update?id={id}`: Updates an existing task by ID. Requires a JSON body with a `name` field.
-- `DELETE /tasks/delete?id={id}`: Deletes a task by ID.
+- `POST /tasks`: Creates a new task. Requires a JSON body with a `name` field.
+- `PUT /tasks/{id}`: Updates an existing task by ID. Requires a JSON body with a `name` field.
+- `DELETE /tasks/{id}`: Deletes a task by ID.
 
 ## How to Run
 
@@ -84,17 +82,17 @@ Source: https://go.dev/blog/routing-enhancements
 - **Create a task**:
 
   ```bash
-  curl -X POST -H "Content-Type: application/json" -d '{"name": "New Task"}' http://localhost:8080/tasks/create
+  curl -X POST -H "Content-Type: application/json" -d '{"name": "New Task"}' http://localhost:8080/tasks
   ```
 
 - **Update a task**:
 
   ```bash
-  curl -X PUT -H "Content-Type: application/json" -d '{"name": "Updated Task"}' http://localhost:8080/tasks/update?id=1
+  curl -X PUT -H "Content-Type: application/json" -d '{"name": "Updated Task"}' http://localhost:8080/tasks/1
   ```
 
 - **Delete a task**:
 
   ```bash
-  curl -X DELETE http://localhost:8080/tasks/delete?id=1
+  curl -X DELETE http://localhost:8080/tasks/1
   ```

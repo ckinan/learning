@@ -93,9 +93,9 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /tasks", listTasks)
-	mux.HandleFunc("POST /tasks/create", createTask)
-	mux.HandleFunc("PUT /tasks/update/{id}", updateTask)
-	mux.HandleFunc("DELETE /tasks/delete/{id}", deleteTask)
+	mux.HandleFunc("POST /tasks", createTask)
+	mux.HandleFunc("PUT /tasks/{id}", updateTask)
+	mux.HandleFunc("DELETE /tasks/{id}", deleteTask)
 
 	fmt.Println("Starting server on :8080")
 	http.ListenAndServe(":8080", mux)
