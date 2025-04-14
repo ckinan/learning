@@ -21,20 +21,11 @@ var (
 )
 
 func listTasks(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(tasks)
 }
 
 func createTask(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
 	var task Task
 	if err := json.NewDecoder(r.Body).Decode(&task); err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
@@ -52,12 +43,7 @@ func createTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateTask(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPut {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	idStr := r.URL.Query().Get("id")
+	idStr := r.PathValue("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid task ID", http.StatusBadRequest)
@@ -84,12 +70,7 @@ func updateTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteTask(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodDelete {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	idStr := r.URL.Query().Get("id")
+	idStr := r.PathValue("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid task ID", http.StatusBadRequest)
@@ -110,11 +91,12 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/tasks", listTasks)
-	http.HandleFunc("/tasks/create", createTask)
-	http.HandleFunc("/tasks/update", updateTask)
-	http.HandleFunc("/tasks/delete", deleteTask)
+	mux := http.NewServeMux()
+	mux.HandleFunc("GET /tasks", listTasks)
+	mux.HandleFunc("POST /tasks/create", createTask)
+	mux.HandleFunc("PUT /tasks/update/{id}", updateTask)
+	mux.HandleFunc("DELETE /tasks/delete/{id}", deleteTask)
 
 	fmt.Println("Starting server on :8080")
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8080", mux)
 }

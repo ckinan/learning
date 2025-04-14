@@ -10,6 +10,46 @@ This is a simple REST API implemented in Go using the standard library. It allow
 - Managing shared resources safely with a `mutex` to prevent race conditions.
 - Query parameter handling and basic error responses.
 
+## Golang 1.22 Routing Enhancements
+
+Starting with Go 1.22, the `http.ServeMux` now supports routing based on both the HTTP method and the path when using `HandleFunc`. This enhancement simplifies routing logic and makes it easier to define handlers for specific methods and paths without additional checks inside the handler functions.
+
+### Benefits:
+
+1. **Cleaner Code**:
+   - You no longer need to manually check the HTTP method (`r.Method`) inside your handler functions. The `ServeMux` can route requests directly based on the method and path.
+
+2. **Improved Readability**:
+   - Handlers are explicitly tied to both the method and path, making the routing logic easier to understand and maintain.
+
+3. **Reduced Boilerplate**:
+   - Eliminates repetitive code for method validation, reducing the risk of errors.
+
+### Example:
+
+Instead of writing:
+
+```go
+mux.HandleFunc("/tasks", func(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodGet {
+        http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+        return
+    }
+    // Handle GET /tasks
+})
+```
+
+You can now write:
+
+```go
+mux.HandleFunc("GET /tasks", listTasks)
+mux.HandleFunc("POST /tasks", createTask)
+```
+
+This pattern makes it clear which methods and paths are supported, and the `ServeMux` handles the routing for you.
+
+Source: https://go.dev/blog/routing-enhancements
+
 ## Endpoints
 
 - `GET /tasks`: Lists all tasks.
