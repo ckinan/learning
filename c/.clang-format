@@ -1,0 +1,5 @@
+AllowShortFunctionsOnASingleLine: None
+BasedOnStyle: LLVM
+IndentWidth: 8
+UseTab: Always
+
