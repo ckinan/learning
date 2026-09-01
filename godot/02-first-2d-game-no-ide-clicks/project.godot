@@ -1,0 +1,11 @@
+config_version=5
+
+[application]
+config/name="Code-Only Icon Display"
+run/main_loop_type="SceneTree"
+run/main_script="res://hello.gd"
+
+[display]
+window/size/viewport_width=480
+window/size/viewport_height=720
+window/size/resizable=false
