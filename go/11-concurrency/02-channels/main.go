@@ -149,15 +149,18 @@ func f5() {
 // sent a message, we can use `select` and `default` clause to
 // unblock the process
 func f6() {
+	fmt.Println("=== f6 ===")
+	// if below line were `c1 := make(chan bool, 1)`, then message
+	// could be sent and received
 	c1 := make(chan bool)
 	c2 := make(chan bool)
 
 	// no message in channel to receive
 	select {
 	case msg := <-c1:
-		fmt.Println("message received", msg)
+		fmt.Println("message received from c1", msg)
 	default:
-		fmt.Println("no message received")
+		fmt.Println("no message received from c1")
 	}
 
 	// message can't be sent b/c channel is unbuffered
@@ -166,9 +169,9 @@ func f6() {
 	// `fatal error: all goroutines are asleep - deadlock!`
 	select {
 	case c1 <- true:
-		fmt.Println("message sent")
+		fmt.Println("message sent to channel c1")
 	default:
-		fmt.Println("message not sent")
+		fmt.Println("message not sent to channel c1")
 	}
 
 	// multiple blocked-channel-operations can be unblocked by a default
@@ -179,7 +182,7 @@ func f6() {
 	case <-c2:
 		fmt.Println("message received from c2")
 	default:
-		fmt.Println("no message received")
+		fmt.Println("no message received from c1 and c2")
 	}
 }
 
