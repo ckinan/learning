@@ -143,10 +143,51 @@ func f5() {
 	}
 }
 
+// f6 shows non-blocking channel operations
+// source: https://gobyexample.com/non-blocking-channel-operations
+// essentially, when channel is blocking because can't receive or
+// sent a message, we can use `select` and `default` clause to
+// unblock the process
+func f6() {
+	c1 := make(chan bool)
+	c2 := make(chan bool)
+
+	// no message in channel to receive
+	select {
+	case msg := <-c1:
+		fmt.Println("message received", msg)
+	default:
+		fmt.Println("no message received")
+	}
+
+	// message can't be sent b/c channel is unbuffered
+	// if channel was: `c1 := make(chan bool, 1)` (buffered), then
+	// messsage could be sent without error:
+	// `fatal error: all goroutines are asleep - deadlock!`
+	select {
+	case c1 <- true:
+		fmt.Println("message sent")
+	default:
+		fmt.Println("message not sent")
+	}
+
+	// multiple blocked-channel-operations can be unblocked by a default
+	// clause
+	select {
+	case <-c1:
+		fmt.Println("message received from c1")
+	case <-c2:
+		fmt.Println("message received from c2")
+	default:
+		fmt.Println("no message received")
+	}
+}
+
 func main() {
-	// f1()
-	// f2()
-	// f3()
-	// f4()
+	f1()
+	f2()
+	f3()
+	f4()
 	f5()
+	f6()
 }
