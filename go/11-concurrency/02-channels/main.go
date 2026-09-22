@@ -186,6 +186,49 @@ func f6() {
 	}
 }
 
+// f7 shows range over channels, i am interested into see if
+// i can get the state of the channel in a for-loop (not only its value)
+// so like `val, state := <-ch` but in the for loop
+// read `f8()` for an example doing it inside a loop
+// source: https://gobyexample.com/range-over-channels
+func f7() {
+	fmt.Println("=== f7 ===")
+	ch := make(chan string, 2)
+	ch <- "one"
+	ch <- "two"
+	close(ch)
+
+	for val := range ch {
+		fmt.Println(val)
+	}
+}
+
+// f8 shows how f7 would look like if we want to know whether a
+// channel is still readable or not
+// === f8 ===
+// val: one, ok: true
+// val: two, ok: true
+// val: , ok: false
+func f8() {
+	fmt.Println("=== f8 ===")
+	ch := make(chan string, 2)
+	ch <- "one"
+	ch <- "two"
+	close(ch)
+
+	for {
+		// if `val` gets the zero value and `ok` is false
+		// then it means the channel is closed and there is
+		// no more values in the channel to receive
+		val, ok := <-ch
+		fmt.Printf("val: %s, ok: %v\n", val, ok)
+		if !ok {
+			fmt.Println("channel closed and no more values to read")
+			break
+		}
+	}
+}
+
 func main() {
 	f1()
 	f2()
@@ -193,4 +236,6 @@ func main() {
 	f4()
 	f5()
 	f6()
+	f7()
+	f8()
 }
