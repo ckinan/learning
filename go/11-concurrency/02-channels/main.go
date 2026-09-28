@@ -203,6 +203,31 @@ func f7() {
 	}
 }
 
+// similar to f7, but this will now have a for-range loop reading a channel
+// from another goroutine
+// demonstrates that it iterates until channel is closed then exit
+func f7v2() {
+	fmt.Println("=== f7v2 ===")
+	ch := make(chan int)
+
+	go func() {
+		ch <- 1
+		ch <- 2
+		ch <- 3
+		close(ch)
+		// consumers of this channel can still be reading
+		// items sent concurrently
+		// so closing the channel won't immediatelly kill
+		// their process
+		fmt.Println("channel closed...")
+	}()
+
+	for v := range ch {
+		fmt.Printf("received: %d\n", v)
+	}
+	fmt.Println("no more items to read from channel, closed")
+}
+
 // f8 shows how f7 would look like if we want to know whether a
 // channel is still readable or not
 // === f8 ===
@@ -229,6 +254,87 @@ func f8() {
 	}
 }
 
+// f9 presents Timers
+// source: https://gobyexample.com/timers
+func f9() {
+	fmt.Println("=== f9 ===")
+	t1 := time.NewTimer(2 * time.Second)
+	fmt.Println("t1 started")
+	<-t1.C
+	fmt.Println("t1 fired")
+
+	t2Secs := 2 * time.Second
+	t2 := time.NewTimer(t2Secs)
+	fmt.Println("t2 started")
+	go func() {
+		<-t2.C
+		fmt.Println("t2 fired")
+	}()
+	s2 := t2.Stop()
+	if s2 {
+		fmt.Println("t2 stopped...")
+	}
+	time.Sleep(t2Secs + time.Second)
+}
+
+// worker is a helper function for f10
+func f10Helper(id int, jobs <-chan int, results chan<- int) {
+	for j := range jobs {
+		fmt.Println("worker", id, "started  job", j)
+		time.Sleep(time.Second)
+		fmt.Println("worker", id, "finished job", j)
+		results <- j * 2
+	}
+}
+
+// f10 runs example of worker pools
+func f10() {
+	fmt.Println("=== f10 ===")
+	const numJobs = 5
+	jobs := make(chan int, numJobs)
+	results := make(chan int, numJobs)
+
+	// run the workers, 3 in total
+	// one job can be processed by ONLY ONE worker in the pool
+	for w := 1; w <= 3; w++ {
+		go f10Helper(w, jobs, results)
+	}
+
+	for j := 1; j <= numJobs; j++ {
+		jobs <- j
+	}
+	close(jobs)
+
+	for a := 1; a <= numJobs; a++ {
+		<-results
+	}
+
+	// below for-loop results in a deadlock error
+	//
+	// for r := range results {
+	// 	fmt.Printf("result: %d\n", r)
+	// }
+	// fatal error: all goroutines are asleep - deadlock!
+}
+
+// f11 shows the difference between length `len` and capacity `cap`
+// `len`: number of elements queued in the channel buffer
+// `cap`: size of the buffer of the channel
+// output:
+// === f11 ===
+// len=4
+// cap=10
+func f11() {
+	fmt.Println("=== f11 ===")
+	ch := make(chan bool, 10)
+	ch <- true
+	ch <- true
+	ch <- true
+	ch <- true
+	fmt.Printf("len=%d\n", len(ch))
+	fmt.Printf("cap=%d\n", cap(ch))
+}
+
 func main() {
 	f1()
 	f2()
@@ -237,5 +343,9 @@ func main() {
 	f5()
 	f6()
 	f7()
+	f7v2()
 	f8()
+	f9()
+	f10()
+	f11()
 }
